@@ -3,6 +3,12 @@
    <body style="background-color:lightGray">
       <script>
 			createEl = function(size=20) {
+				try {
+					clearInterval(window.Inte);
+				}
+				catch (err) {
+					null
+				}
 				el = document.createElement('section');
 				el.innerHTML = `<span onclick="if(this.style.backgroundColor == 'white') { this.style.backgroundColor = 'black'; } else { this.style.backgroundColor = 'white'  };" style="background-color: white; height: ` + size + `px; width: ` + size + `px; display: inline-block; border: 2px solid gray; border-top-width: thin; border-left-width: thin" marked=false> </span>`;
 				return el.firstChild;
@@ -180,8 +186,8 @@
       <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
 	  <button onclick="markAll(); setMarked();">Grow!</button><br><br>
 	  <input type="number" id="timer" placeholder="Every how many millis?">
-	  <button onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value))">Run!	</button>
-	  <button onclick="clearInterval(window.Inte)">Stop!</button>
+	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false;">Run!	</button>
+	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true;">Stop!</button>
 	  <button onclick="game(); setMarked();">One step!</button><br><br>
 	  <br><br>
       <div id="board"></div>
