@@ -1,0 +1,189 @@
+<html>
+   <head></head>
+   <body style="background-color:lightGray">
+      <script>
+			createEl = function(size=20) {
+				el = document.createElement('section');
+				el.innerHTML = `<span onclick="if(this.style.backgroundColor == 'white') { this.style.backgroundColor = 'black'; } else { this.style.backgroundColor = 'white'  };" style="background-color: white; height: ` + size + `px; width: ` + size + `px; display: inline-block; border: 2px solid gray; border-top-width: thin; border-left-width: thin" marked=false> </span>`;
+				return el.firstChild;
+			}
+			make = function(size=20) {
+				const md = () => createEl(size);
+				document.getElementById('board').innerHTML = "";
+
+				function makeBoard(container, length = 8) {
+					for (let i = 0; i < length; i++) {
+						const row = document.createElement('section')
+						for (let j = 0; j < length; j++) {
+							const v = md();
+							v.setAttribute('id', (i * window.boardSize) + j)
+							v.setAttribute('row', i)
+							v.setAttribute('col', j)
+							row.appendChild(v);
+						}
+						container.appendChild(row);
+					}
+				}
+				makeBoard(document.getElementById('board'), document.getElementById('input').valueAsNumber);
+			}
+			coordsToEl = function(x, y) {
+				return document.getElementById(parseInt(x) * window.boardSize + parseInt(y));
+			}
+			mark = function(id) {
+				document.getElementById(id).setAttribute('marked', true);
+			}
+			mark2 = function(id) {
+				document.getElementById(id).setAttribute('marked2', true);
+			}
+			setMarked = function() {
+				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
+						if (JSON.parse(item.getAttribute("marked"))) {
+							item.style.backgroundColor = 'black';
+							item.setAttribute('marked', false);
+						}
+						if (JSON.parse(item.getAttribute("marked2"))) {
+							item.style.backgroundColor = 'white';
+							item.setAttribute('marked2', false);
+						}
+				});
+			}
+			markAll = function() {
+				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
+						if (item.style.backgroundColor == 'black') {
+							Array.from(document.getElementsByTagName('span')).forEach(function(item2) {
+								if (parseInt(item2.getAttribute('row')) + 1 == parseInt(item.getAttribute('row'))
+									|| parseInt(item2.getAttribute('row')) - 1 == parseInt(item.getAttribute('row'))
+										||  parseInt(item2.getAttribute('row')) == parseInt(item.getAttribute('row'))) {
+										if (parseInt(item2.getAttribute('col')) + 1 == parseInt(item.getAttribute('col'))
+											|| parseInt(item2.getAttribute('col')) - 1 == parseInt(item.getAttribute('col'))
+												|| parseInt(item2.getAttribute('col')) == parseInt(item.getAttribute('col'))) {
+											mark(coordsToEl(getAt(item2, 'row'), getAt(item2, 'col')).id);
+									}								
+								}
+							});
+					}
+				});	
+			}
+			getAt = function(item, at) {
+				return parseInt(item.getAttribute(at));
+			}
+			game = function() {
+				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
+					neighbors = 0;
+					try {
+						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col')).style.backgroundColor == 'black') {
+							if (getAt(item, 'row') == window.boardSize - 1) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					try {
+						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
+							if (getAt(item, 'row') == window.boardSize - 1) {
+								console.log(causeError)
+							};
+							if (getAt(item, 'col') == window.boardSize - 1) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					try {
+						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
+							if (getAt(item, 'col') == 0) {
+								console.log(causeError)
+							};
+							if (getAt(item, 'row') == window.boardSize - 1) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					try {
+						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') + 1).style.backgroundColor == 'black') {
+							if (getAt(item, 'col') == window.boardSize - 1) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					try {
+						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') - 1).style.backgroundColor == 'black') {
+							if (getAt(item, 'col') == 0) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					try {
+						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
+							if (getAt(item, 'row') == 0) {
+								console.log(causeError)
+							};
+							if (getAt(item, 'col') == window.boardSize - 1) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					try {
+						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col')).style.backgroundColor == 'black') {
+							if (getAt(item, 'row') == 0) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					try {
+						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
+							if (getAt(item, 'col') == 0) {
+								console.log(causeError)
+							};
+							if (getAt(item, 'row') == 0) {
+								console.log(causeError)
+							};
+							neighbors++;
+						}
+					} catch (err) {
+						null
+					}
+					if (item.style.backgroundColor == 'black') {
+						if (!(neighbors == 2 || neighbors == 3)) {
+							mark2(item.id)
+						}
+					}
+					else {
+						if (neighbors == 3) {
+							mark(item.id)
+						}
+					}
+				});
+			}
+      </script>
+      <input type="number" id="input" placeholder="Size of board?"><br>
+	  <input type="number" id="size" placeholder="Size of box? (Default 30)."><br>
+      <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
+	  <button onclick="markAll(); setMarked();">Grow!</button><br><br>
+	  <input type="number" id="timer" placeholder="Every how many millis?">
+	  <button onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value))">Run!	</button>
+	  <button onclick="clearInterval(window.Inte)">Stop!</button>
+	  <button onclick="game(); setMarked();">One step!</button><br><br>
+	  <br><br>
+      <div id="board"></div>
+   </body>
+</html>
