@@ -184,11 +184,11 @@
 				});
 			}
       </script>
-      <input type="number" id="input" placeholder="Size of board?"><br>
-	  <input type="number" id="size" placeholder="Size of box? (Default 30)."><br>
-      <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
+      	  <input type="number" id="input" placeholder="Size of board?" autocomplete="false" value="30"><br>
+	  <input type="number" id="size" placeholder="Size of box? (Default 15)." autocomplete="false" value="15"><br>
+      	  <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
 	  <button onclick="markAll(); setMarked();">Grow!</button><br><br>
-	  <input type="number" id="timer" placeholder="Every how many millis?">
+	  <input type="number" id="timer" placeholder="Every how many millis?" value="500" autocomplete="false">
 	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true;">Run!	</button>
 	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
 	  <button id="step" onclick="game(); setMarked();">One step!</button><br><br>
