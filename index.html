@@ -56,23 +56,6 @@
 						}
 				});
 			}
-			markAll = function() {
-				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
-						if (item.style.backgroundColor == 'black') {
-							Array.from(document.getElementsByTagName('span')).forEach(function(item2) {
-								if (parseInt(item2.getAttribute('row')) + 1 == parseInt(item.getAttribute('row'))
-									|| parseInt(item2.getAttribute('row')) - 1 == parseInt(item.getAttribute('row'))
-										||  parseInt(item2.getAttribute('row')) == parseInt(item.getAttribute('row'))) {
-										if (parseInt(item2.getAttribute('col')) + 1 == parseInt(item.getAttribute('col'))
-											|| parseInt(item2.getAttribute('col')) - 1 == parseInt(item.getAttribute('col'))
-												|| parseInt(item2.getAttribute('col')) == parseInt(item.getAttribute('col'))) {
-											mark(coordsToEl(getAt(item2, 'row'), getAt(item2, 'col')).id);
-									}								
-								}
-							});
-					}
-				});	
-			}
 			getAt = function(item, at) {
 				return parseInt(item.getAttribute(at));
 			}
@@ -187,7 +170,6 @@
       	  <input type="number" id="input" placeholder="Size of board?" autocomplete="false" value="30"><br>
 	  <input type="number" id="size" placeholder="Size of box? (Default 15)." autocomplete="false" value="15"><br>
       	  <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
-	  <button onclick="markAll(); setMarked();">Grow!</button><br><br>
 	  <input type="number" id="timer" placeholder="Every how many millis?" value="500" autocomplete="false">
 	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true;">Run!	</button>
 	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
