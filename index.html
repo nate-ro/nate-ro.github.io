@@ -173,7 +173,7 @@
 	  <input type="number" id="size" autocomplete="false" value="15"><br>
       	  <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
 	   <a> Every how many milliseconds? </a>
-	  <input type="number" id="timer" value="500" autocomplete="false">
+	  <input type="number" id="timer" value="500" autocomplete="false"><br><br>
 	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true;">Run!	</button>
 	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
 	  <button id="step" onclick="game(); setMarked();">One step!</button><br><br>
