@@ -177,6 +177,7 @@
 	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true;">Run!	</button>
 	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
 	  <button id="step" onclick="game(); setMarked();">One step!</button><br><br>
+	   <a> Click on a square to change its color. </a>
 	  <br><br>
       <div id="board"></div>
    </body>
