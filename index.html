@@ -5,6 +5,9 @@
 			createEl = function(size=20) {
 				try {
 					clearInterval(window.Inte);
+					document.getElementById('run').disabled = false;
+					this.disabled = true;
+					document.getElementById('step').disabled = false;
 				}
 				catch (err) {
 					null
@@ -186,9 +189,9 @@
       <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
 	  <button onclick="markAll(); setMarked();">Grow!</button><br><br>
 	  <input type="number" id="timer" placeholder="Every how many millis?">
-	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false;">Run!	</button>
-	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true;">Stop!</button>
-	  <button onclick="game(); setMarked();">One step!</button><br><br>
+	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true;">Run!	</button>
+	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
+	  <button id="step" onclick="game(); setMarked();">One step!</button><br><br>
 	  <br><br>
       <div id="board"></div>
    </body>
