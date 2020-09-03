@@ -63,97 +63,45 @@
 			game = function() {
 				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
 					neighbors = 0;
-					try {
+					if (!(getAt(item, 'row') == window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col')).style.backgroundColor == 'black') {
-							if (getAt(item, 'row') == window.boardSize - 1) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
-					try {
+					if (!(getAt(item, 'row') == window.boardSize - 1) && !(getAt(item, 'col') == window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
-							if (getAt(item, 'row') == window.boardSize - 1) {
-								console.log(causeError)
-							};
-							if (getAt(item, 'col') == window.boardSize - 1) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
-					try {
+					if (!(getAt(item, 'col') == 0) && !(getAt(item, 'row') == window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
-							if (getAt(item, 'col') == 0) {
-								console.log(causeError)
-							};
-							if (getAt(item, 'row') == window.boardSize - 1) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
-					try {
+					if (!(getAt(item, 'col') == window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') + 1).style.backgroundColor == 'black') {
-							if (getAt(item, 'col') == window.boardSize - 1) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
-					try {
+					if (!(getAt(item, 'col') == 0)) {
 						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') - 1).style.backgroundColor == 'black') {
-							if (getAt(item, 'col') == 0) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
-					try {
+					if (!(getAt(item, 'row') == 0) && !(getAt(item, 'col') == window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
-							if (getAt(item, 'row') == 0) {
-								console.log(causeError)
-							};
-							if (getAt(item, 'col') == window.boardSize - 1) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
-					try {
+					if (!(getAt(item, 'row') == 0)) {
 						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col')).style.backgroundColor == 'black') {
-							if (getAt(item, 'row') == 0) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
-					try {
+					if (!(getAt(item, 'col') == 0) && !(getAt(item, 'row') == 0)) {
 						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
-							if (getAt(item, 'col') == 0) {
-								console.log(causeError)
-							};
-							if (getAt(item, 'row') == 0) {
-								console.log(causeError)
-							};
 							neighbors++;
 						}
-					} catch (err) {
-						null
 					}
 					if (item.style.backgroundColor == 'black') {
 						if (!(neighbors == 2 || neighbors == 3)) {
