@@ -128,8 +128,8 @@
 	   <a> Size of each box? </a>
 	  <input type="number" id="size" autocomplete="false" value="15"><br>
       	  <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button>
-		  <button id="save" disabled=true onclick="window.localStorage.setItem('saved', document.getElementById('board').innerHTML); document.getElementById('load').disabled = false;">Save!</button>
-		  <button id="load" disabled=true onclick="document.getElementById('board').innerHTML = window.localStorage.getItem('saved'); document.getElementById('save').disabled = false; document.getElementById('ex').hidden = false; try { clearInterval(window.Inte); document.getElementById('run').disabled = false; document.getElementById('stop').disabled = true; document.getElementById('step').disabled = false; } catch (err) { null };">Load!</button>
+		  <button id="save" disabled=true onclick="window.localStorage.setItem('saved', document.getElementById('board').innerHTML); window.localStorage.setItem('boardSize', window.boardSize); document.getElementById('load').disabled = false;">Save!</button>
+		  <button id="load" disabled=true onclick="window.boardSize = window.localStorage.getItem('boardSize'); document.getElementById('board').innerHTML = window.localStorage.getItem('saved'); document.getElementById('save').disabled = false; document.getElementById('ex').hidden = false; try { clearInterval(window.Inte); document.getElementById('run').disabled = false; document.getElementById('stop').disabled = true; document.getElementById('step').disabled = false; } catch (err) { null };">Load!</button>
 		  <br><br>
 	   <a> Every how many milliseconds? </a>
 	  <input type="number" id="timer" value="500" autocomplete="false"><br><br>
