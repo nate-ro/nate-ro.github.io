@@ -2,13 +2,20 @@
    <head></head>
    <body style="background-color:lightGray">
       <script>
+			window.onload = function () {
+				if(window.localStorage.getItem('saved')) {
+					document.getElementById('load').disabled = false;
+				}
+			}
 			createEl = function(size=20) {
 				document.getElementById('ex').hidden = false;
 				try {
 					clearInterval(window.Inte);
+					document.getElementById('save').disabled = false;
 					document.getElementById('run').disabled = false;
 					document.getElementById('stop').disabled = true;
 					document.getElementById('step').disabled = false;
+					
 				}
 				catch (err) {
 					null
@@ -63,42 +70,42 @@
 			game = function() {
 				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
 					neighbors = 0;
-					if (!(getAt(item, 'row') == window.boardSize - 1)) {
+					if ((getAt(item, 'row') != window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col')).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if (!(getAt(item, 'row') == window.boardSize - 1) && !(getAt(item, 'col') == window.boardSize - 1)) {
+					if ((getAt(item, 'row') != window.boardSize - 1) && (getAt(item, 'col') != window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if (!(getAt(item, 'col') == 0) && !(getAt(item, 'row') == window.boardSize - 1)) {
+					if ((getAt(item, 'col') != 0) && (getAt(item, 'row') != window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if (!(getAt(item, 'col') == window.boardSize - 1)) {
+					if ((getAt(item, 'col') != window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') + 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if (!(getAt(item, 'col') == 0)) {
+					if ((getAt(item, 'col') != 0)) {
 						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') - 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if (!(getAt(item, 'row') == 0) && !(getAt(item, 'col') == window.boardSize - 1)) {
+					if ((getAt(item, 'row') != 0) && (getAt(item, 'col') != window.boardSize - 1)) {
 						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if (!(getAt(item, 'row') == 0)) {
+					if ((getAt(item, 'row') != 0)) {
 						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col')).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if (!(getAt(item, 'col') == 0) && !(getAt(item, 'row') == 0)) {
+					if ((getAt(item, 'col') != 0) && (getAt(item, 'row') != 0)) {
 						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
@@ -120,11 +127,14 @@
       	  <input type="number" id="input" autocomplete="false" value="30"><br>
 	   <a> Size of each box? </a>
 	  <input type="number" id="size" autocomplete="false" value="15"><br>
-      	  <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button><br><br>
+      	  <button onclick="window.boardSize = parseInt(document.getElementById('input').value); make(parseInt(document.getElementById('size').value));">Create!</button>
+		  <button id="save" disabled=true onclick="window.localStorage.setItem('saved', document.getElementById('board').innerHTML); document.getElementById('load').disabled = false;">Save!</button>
+		  <button id="load" disabled=true onclick="document.getElementById('board').innerHTML = window.localStorage.getItem('saved'); document.getElementById('save').disabled = false; document.getElementById('ex').hidden = false; try { clearInterval(window.Inte); document.getElementById('run').disabled = false; document.getElementById('stop').disabled = true; document.getElementById('step').disabled = false; } catch (err) { null };">Load!</button>
+		  <br><br>
 	   <a> Every how many milliseconds? </a>
 	  <input type="number" id="timer" value="500" autocomplete="false"><br><br>
-	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true;">Run!	</button>
-	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
+	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('save').disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true; document.getElementById('save').disabled = true;">Run!	</button>
+	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; document.getElementById('save').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
 	  <button id="step" onclick="game(); setMarked();">One step!</button><br><br>
 	   <a hidden=true id="ex"> Click on a square to change its color. </a>
 	  <br><br>
