@@ -43,7 +43,7 @@
 				}
 				makeBoard(document.getElementById('board'), document.getElementById('input').valueAsNumber);
 			}
-			coordsToEl = function(x, y) {
+			coordsToEl = function(y, x) {
 				return document.getElementById(parseInt(x) * window.boardSize + parseInt(y));
 			}
 			mark = function(id) {
@@ -68,46 +68,168 @@
 				return parseInt(item.getAttribute(at));
 			}
 			game = function() {
+				if (document.getElementById('switch').checked)
+				{
+					infGame();
+					return;
+				}
 				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
 					neighbors = 0;
-					if ((getAt(item, 'row') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col')).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'row') != window.boardSize - 1) && (getAt(item, 'col') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'col') != 0) && (getAt(item, 'row') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'row') + 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
 					if ((getAt(item, 'col') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') + 1).style.backgroundColor == 'black') {
+						if (coordsToEl(getAt(item, 'col') + 1, getAt(item, 'row')).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if ((getAt(item, 'col') != 0)) {
-						if (coordsToEl(getAt(item, 'row'), getAt(item, 'col') - 1).style.backgroundColor == 'black') {
+					if ((getAt(item, 'col') != window.boardSize - 1) && (getAt(item, 'row') != window.boardSize - 1)) {
+						if (coordsToEl(getAt(item, 'col') + 1, getAt(item, 'row') + 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
 					if ((getAt(item, 'row') != 0) && (getAt(item, 'col') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') + 1).style.backgroundColor == 'black') {
+						if (coordsToEl(getAt(item, 'col') + 1, getAt(item, 'row') - 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((getAt(item, 'row') != window.boardSize - 1)) {
+						if (coordsToEl(getAt(item, 'col'), getAt(item, 'row') + 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
 					if ((getAt(item, 'row') != 0)) {
-						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col')).style.backgroundColor == 'black') {
+						if (coordsToEl(getAt(item, 'col'), getAt(item, 'row') - 1).style.backgroundColor == 'black') {
 							neighbors++;
 						}
 					}
-					if ((getAt(item, 'col') != 0) && (getAt(item, 'row') != 0)) {
-						if (coordsToEl(getAt(item, 'row') - 1, getAt(item, 'col') - 1).style.backgroundColor == 'black') {
+					if ((getAt(item, 'col') != 0) && (getAt(item, 'row') != window.boardSize - 1)) {
+						if (coordsToEl(getAt(item, 'col') - 1, getAt(item, 'row') + 1).style.backgroundColor == 'black') {
 							neighbors++;
+						}
+					}
+					if ((getAt(item, 'col') != 0)) {
+						if (coordsToEl(getAt(item, 'col') - 1, getAt(item, 'row')).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((getAt(item, 'row') != 0) && (getAt(item, 'col') != 0)) {
+						if (coordsToEl(getAt(item, 'col') - 1, getAt(item, 'row') - 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if (item.style.backgroundColor == 'black') {
+						if (!(neighbors == 2 || neighbors == 3)) {
+							mark2(item.id)
+						}
+					}
+					else {
+						if (neighbors == 3) {
+							mark(item.id)
+						}
+					}
+				});
+			}
+			infGame = function() {
+				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
+					neighbors = 0;
+					col = getAt(item, 'col')
+					row = getAt(item, 'row')
+					if ((col != window.boardSize - 1)) {
+						if (coordsToEl(col + 1, row).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((col != window.boardSize - 1) && (row != window.boardSize - 1)) {
+						if (coordsToEl(col + 1, row + 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((row != 0) && (col != window.boardSize - 1)) {
+						if (coordsToEl(col + 1, row - 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((row != window.boardSize - 1)) {
+						if (coordsToEl(col, row + 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((row != 0)) {
+						if (coordsToEl(col, row - 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((col != 0) && (row != window.boardSize - 1)) {
+						if (coordsToEl(col - 1, row + 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((col != 0)) {
+						if (coordsToEl(col - 1, row).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if ((row != 0) && (col != 0)) {
+						if (coordsToEl(col - 1, row - 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+					}
+					if (col == 0) {
+						if (row != 0) {
+							if (coordsToEl(window.boardSize - 1, row - 1).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+						}
+						if (coordsToEl(window.boardSize - 1, row).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+						if (row != window.boardSize - 1) {
+							if (coordsToEl(window.boardSize - 1, row + 1).style.backgroundColor == 'black') {
+								neighbors++;
+							}		
+						}
+					}
+					if (col == window.boardSize - 1) {
+						if (row != 0) {
+							if (coordsToEl(0, row - 1).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+						}
+						if (coordsToEl(0, row).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+						if (row != window.boardSize - 1) {
+							if (coordsToEl(0, row + 1).style.backgroundColor == 'black') {
+								neighbors++;
+							}		
+						}
+					}
+					if (row == 0) {
+						if (col != 0) {
+							if (coordsToEl(col - 1, window.boardSize - 1).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+						}
+						if (coordsToEl(col, window.boardSize - 1).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+						if (col != window.boardSize - 1) {
+							if (coordsToEl(col + 1, window.boardSize - 1).style.backgroundColor == 'black') {
+								neighbors++;
+							}	
+						}
+					}
+					if (row == window.boardSize - 1) {
+						if (col != 0) {
+							if (coordsToEl(col - 1, 0).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+						}
+						if (coordsToEl(col, 0).style.backgroundColor == 'black') {
+							neighbors++;
+						}
+						if (col != window.boardSize - 1) {
+							if (coordsToEl(col + 1, 0).style.backgroundColor == 'black') {
+								neighbors++;
+							}	
 						}
 					}
 					if (item.style.backgroundColor == 'black') {
@@ -133,6 +255,7 @@
 		  <br><br>
 	   <a> Every how many milliseconds? </a>
 	  <input type="number" id="timer" value="500" autocomplete="false"><br><br>
+	  <a> Make grid infinite?</a> <input type='checkbox' id='switch'><br>
 	  <button id='run' onclick="window.Inte = setInterval(function(){game(); setMarked();}, parseInt(document.getElementById('timer').value)); this.disabled = true; document.getElementById('save').disabled = true; document.getElementById('stop').disabled = false; document.getElementById('step').disabled = true; document.getElementById('save').disabled = true;">Run!	</button>
 	  <button id='stop' disabled=true onclick="clearInterval(window.Inte); document.getElementById('run').disabled = false; document.getElementById('save').disabled = false; this.disabled = true; document.getElementById('step').disabled = false;">Stop!</button>
 	  <button id="step" onclick="game(); setMarked();">One step!</button><br><br>
