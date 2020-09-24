@@ -68,70 +68,73 @@
 				return parseInt(item.getAttribute(at));
 			}
 			game = function() {
-				if (document.getElementById('switch').checked)
-				{
-					infGame();
-					return;
-				}
-				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
-					neighbors = 0;
-					if ((getAt(item, 'col') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'col') + 1, getAt(item, 'row')).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'col') != window.boardSize - 1) && (getAt(item, 'row') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'col') + 1, getAt(item, 'row') + 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'row') != 0) && (getAt(item, 'col') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'col') + 1, getAt(item, 'row') - 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'row') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'col'), getAt(item, 'row') + 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'row') != 0)) {
-						if (coordsToEl(getAt(item, 'col'), getAt(item, 'row') - 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'col') != 0) && (getAt(item, 'row') != window.boardSize - 1)) {
-						if (coordsToEl(getAt(item, 'col') - 1, getAt(item, 'row') + 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'col') != 0)) {
-						if (coordsToEl(getAt(item, 'col') - 1, getAt(item, 'row')).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if ((getAt(item, 'row') != 0) && (getAt(item, 'col') != 0)) {
-						if (coordsToEl(getAt(item, 'col') - 1, getAt(item, 'row') - 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-					}
-					if (item.style.backgroundColor == 'black') {
-						if (!(neighbors == 2 || neighbors == 3)) {
-							mark2(item.id)
-						}
-					}
-					else {
-						if (neighbors == 3) {
-							mark(item.id)
-						}
-					}
-				});
-			}
-			infGame = function() {
 				Array.from(document.getElementsByTagName('span')).forEach(function(item) {
 					neighbors = 0;
 					col = getAt(item, 'col')
 					row = getAt(item, 'row')
+					if (document.getElementById('switch').checked)
+					{
+						if (col == 0) {
+							if (row != 0) {
+								if (coordsToEl(window.boardSize - 1, row - 1).style.backgroundColor == 'black') {
+									neighbors++;
+								}
+							}
+							if (coordsToEl(window.boardSize - 1, row).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+							if (row != window.boardSize - 1) {
+								if (coordsToEl(window.boardSize - 1, row + 1).style.backgroundColor == 'black') {
+									neighbors++;
+								}		
+							}
+						}
+						if (col == window.boardSize - 1) {
+							if (row != 0) {
+								if (coordsToEl(0, row - 1).style.backgroundColor == 'black') {
+									neighbors++;
+								}
+							}
+							if (coordsToEl(0, row).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+							if (row != window.boardSize - 1) {
+								if (coordsToEl(0, row + 1).style.backgroundColor == 'black') {
+									neighbors++;
+								}		
+							}
+						}
+						if (row == 0) {
+							if (col != 0) {
+								if (coordsToEl(col - 1, window.boardSize - 1).style.backgroundColor == 'black') {
+									neighbors++;
+								}
+							}
+							if (coordsToEl(col, window.boardSize - 1).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+							if (col != window.boardSize - 1) {
+								if (coordsToEl(col + 1, window.boardSize - 1).style.backgroundColor == 'black') {
+									neighbors++;
+								}	
+							}
+						}
+						if (row == window.boardSize - 1) {
+							if (col != 0) {
+								if (coordsToEl(col - 1, 0).style.backgroundColor == 'black') {
+									neighbors++;
+								}
+							}
+							if (coordsToEl(col, 0).style.backgroundColor == 'black') {
+								neighbors++;
+							}
+							if (col != window.boardSize - 1) {
+								if (coordsToEl(col + 1, 0).style.backgroundColor == 'black') {
+									neighbors++;
+								}	
+							}
+						}
+					}
 					if ((col != window.boardSize - 1)) {
 						if (coordsToEl(col + 1, row).style.backgroundColor == 'black') {
 							neighbors++;
@@ -170,66 +173,6 @@
 					if ((row != 0) && (col != 0)) {
 						if (coordsToEl(col - 1, row - 1).style.backgroundColor == 'black') {
 							neighbors++;
-						}
-					}
-					if (col == 0) {
-						if (row != 0) {
-							if (coordsToEl(window.boardSize - 1, row - 1).style.backgroundColor == 'black') {
-								neighbors++;
-							}
-						}
-						if (coordsToEl(window.boardSize - 1, row).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-						if (row != window.boardSize - 1) {
-							if (coordsToEl(window.boardSize - 1, row + 1).style.backgroundColor == 'black') {
-								neighbors++;
-							}		
-						}
-					}
-					if (col == window.boardSize - 1) {
-						if (row != 0) {
-							if (coordsToEl(0, row - 1).style.backgroundColor == 'black') {
-								neighbors++;
-							}
-						}
-						if (coordsToEl(0, row).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-						if (row != window.boardSize - 1) {
-							if (coordsToEl(0, row + 1).style.backgroundColor == 'black') {
-								neighbors++;
-							}		
-						}
-					}
-					if (row == 0) {
-						if (col != 0) {
-							if (coordsToEl(col - 1, window.boardSize - 1).style.backgroundColor == 'black') {
-								neighbors++;
-							}
-						}
-						if (coordsToEl(col, window.boardSize - 1).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-						if (col != window.boardSize - 1) {
-							if (coordsToEl(col + 1, window.boardSize - 1).style.backgroundColor == 'black') {
-								neighbors++;
-							}	
-						}
-					}
-					if (row == window.boardSize - 1) {
-						if (col != 0) {
-							if (coordsToEl(col - 1, 0).style.backgroundColor == 'black') {
-								neighbors++;
-							}
-						}
-						if (coordsToEl(col, 0).style.backgroundColor == 'black') {
-							neighbors++;
-						}
-						if (col != window.boardSize - 1) {
-							if (coordsToEl(col + 1, 0).style.backgroundColor == 'black') {
-								neighbors++;
-							}	
 						}
 					}
 					if (item.style.backgroundColor == 'black') {
