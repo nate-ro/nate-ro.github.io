@@ -11,14 +11,12 @@
       var game = document.getElementById('game');
       game.getElementById("up-tri").setAttribute("d", `M 0 0 L ${triSize} 0 L ${triSize/2} ${triSize} z`);
       game.getElementById("dw-tri").setAttribute("d", `M ${triSize/2} 0 L ${triSize} ${triSize} L 0 ${triSize} z`);
-	  x = 0;
-	  y = 0;
-
+      x = 0;
+      y = 0;
       triangles = [];
       up = true;
 	  
       for(yCoord = 0; yCoord < gameH-triSize+0.15; yCoord += triSize+0.15)
-
       {
         x = 0;
         for(xCoord = 0; xCoord < gameW-(triSize/2); xCoord += (triSize)/2)
@@ -109,8 +107,7 @@
   <button id='run' onclick="window.Inte = setInterval(game, parseInt(document.getElementById('timer').value))">Run!</button>
   <button id='stop' onclick="clearInterval(window.Inte)">Stop!</button>
   <button id="step" onclick="game()">One step!</button><br><br>
-  <a>Size?</a><input id="size">
- <!-- <button onclick="init((document.getElementById('size').value + 1) * 1.25, (document.getElementById('size').value + 4) * 2.115);">Generate</button><br><br> <!-->
+  <a>Size?</a><input id="size" value=20>
   <button onclick="init((parseInt(document.getElementById('size').value) + parseInt(document.getElementById('size2').value) - 27) * 12.5, (parseInt(document.getElementById('size').value) + parseInt(document.getElementById('size2').value) - 27) * 12.5);">Generate</button><br><br>
 
   <svg id="game" width="100%" height="100%">
