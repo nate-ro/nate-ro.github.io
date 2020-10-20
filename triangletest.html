@@ -119,12 +119,14 @@
   <a> Size of each triangle? (temporarily disabled) </a>
   <input type="number" disabled=true id="size2" autocomplete="false" value="30"><br>
   <a> Every how many milliseconds? </a><input type="number" id="timer" value="100" autocomplete="false"><br><br>
+  <button id="save" onclick="window.localStorage.setItem('save', document.getElementById('game').innerHTML);">Save!</button>
+  <button id="load" onclick="document.getElementById('game').innerHTML = window.localStorage.getItem('save'); try { clearInterval(window.Inte); window.stepCount = 0; document.getElementById('stepcount').innerText = window.stepCount; } catch (err) { null };">Load!</button>
+  <br><br>
   <button id='run' onclick="window.stepCount = 0; document.getElementById('stepcount').innerText = window.stepCount; window.Inte = setInterval(function() {game(); window.stepCount = window.stepCount + 1; document.getElementById('stepcount').innerText = window.stepCount;}, parseInt(document.getElementById('timer').value))">Run!</button>
   <button id='stop' onclick="clearInterval(window.Inte);">Stop!</button>
   <button id="step" onclick="game(); window.stepCount = window.stepCount + 1; document.getElementById('stepcount').innerText = window.stepCount;">One step!</button><br>
   <a>Step count: </a><a id="stepcount"></a><br><br>
-  <a>Size?</a><input id="size">
- <!-- <button onclick="init((document.getElementById('size').value + 1) * 1.25, (document.getElementById('size').value + 4) * 2.115);">Generate</button><br><br> <!-->
+  <a>Size?</a><input id="size" value=40>
   <button onclick="window.stepCount = 0; document.getElementById('stepcount').innerText = window.stepCount; init((parseInt(document.getElementById('size').value) + parseInt(document.getElementById('size2').value) - 27) * 12.5, (parseInt(document.getElementById('size').value) + parseInt(document.getElementById('size2').value) - 27) * 12.5);">Generate</button><br><br>
 
   <svg id="game" width="100%" height="100%">
