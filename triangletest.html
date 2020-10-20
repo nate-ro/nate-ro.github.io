@@ -119,8 +119,8 @@
   <a> Size of each triangle? (temporarily disabled) </a>
   <input type="number" disabled=true id="size2" autocomplete="false" value="30"><br>
   <a> Every how many milliseconds? </a><input type="number" id="timer" value="100" autocomplete="false"><br><br>
-  <button id='run' onclick="window.Inte = setInterval(function() {game(); window.stepCount = window.stepCount + 1; document.getElementById('stepcount').innerText = window.stepCount;}, parseInt(document.getElementById('timer').value))">Run!</button>
-  <button id='stop' onclick="clearInterval(window.Inte); window.stepCount = 0; document.getElementById('stepcount').innerText = window.stepCount;">Stop!</button>
+  <button id='run' onclick="window.stepCount = 0; document.getElementById('stepcount').innerText = window.stepCount; window.Inte = setInterval(function() {game(); window.stepCount = window.stepCount + 1; document.getElementById('stepcount').innerText = window.stepCount;}, parseInt(document.getElementById('timer').value))">Run!</button>
+  <button id='stop' onclick="clearInterval(window.Inte);">Stop!</button>
   <button id="step" onclick="game(); window.stepCount = window.stepCount + 1; document.getElementById('stepcount').innerText = window.stepCount;">One step!</button><br>
   <a>Step count: </a><a id="stepcount"></a><br><br>
   <a>Size?</a><input id="size">
