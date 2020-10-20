@@ -7,110 +7,117 @@
 	window.lastBoard = null;
 
 	function init(gameW, gameH) {
-	    triSize = parseInt(document.getElementById('size2').value)
-	    //reset old board
-	    Array.from(document.getElementsByClassName('triangle')).forEach(function(item) {
-		item.parentNode.removeChild(item)
-	    });
-	    var game = document.getElementById('game');
-	    game.getElementById("up-tri").setAttribute("d", `M 0 0 L ${triSize} 0 L ${triSize/2} ${triSize} z`);
-	    game.getElementById("dw-tri").setAttribute("d", `M ${triSize/2} 0 L ${triSize} ${triSize} L 0 ${triSize} z`);
-	    x = 0;
-	    y = 0;
-
-	    triangles = [];
-	    up = true;
-
-	    for (yCoord = 0; yCoord < gameH - triSize + 0.15; yCoord += triSize + 0.15)
-	    {
+		triSize = parseInt(document.getElementById('size2').value)
+		//reset old board
+		Array.from(document.getElementsByClassName('triangle')).forEach(function(item) {
+			item.parentNode.removeChild(item)
+		});
+		var game = document.getElementById('game');
+		game.getElementById("up-tri").setAttribute("d", `M 0 0 L ${triSize} 0 L ${triSize/2} ${triSize} z`);
+		game.getElementById("dw-tri").setAttribute("d", `M ${triSize/2} 0 L ${triSize} ${triSize} L 0 ${triSize} z`);
 		x = 0;
-		for (xCoord = 0; xCoord < gameW - (triSize / 2); xCoord += (triSize) / 2) {
-		    var tmpTri = document.createElementNS(xmlns, "use");
-		    if (up) {
-			tmpTri.setAttribute("href", "#up-tri");
-		    } else {
-			tmpTri.setAttribute("href", "#dw-tri");
-		    }
-		    up = !up;
-		    tmpTri.setAttribute("id", `${x}, ${y}`);
-		    tmpTri.style.fill = 'white';
-		    tmpTri.setAttribute('class', 'triangle')
-		    tmpTri.setAttribute("stroke", "grey")
-		    tmpTri.setAttribute('x', xCoord)
-		    tmpTri.setAttribute('y', yCoord)
-		    tmpTri.setAttribute("onclick", "if(this.style.fill == 'black'){this.style.fill = 'white'} else{this.style.fill = 'black'}")
-		    x++;
+		y = 0;
 
-		    game.appendChild(tmpTri);
+		triangles = [];
+		up = true;
+
+		for (yCoord = 0; yCoord < gameH - triSize + 0.15; yCoord += triSize + 0.15)
+
+		{
+			x = 0;
+			for (xCoord = 0; xCoord < gameW - (triSize / 2); xCoord += (triSize) / 2) {
+				var tmpTri = document.createElementNS(xmlns, "use");
+				if (up) {
+					tmpTri.setAttribute("href", "#up-tri");
+				} else {
+					tmpTri.setAttribute("href", "#dw-tri");
+				}
+				up = !up;
+				tmpTri.setAttribute("id", `${x}, ${y}`);
+				tmpTri.style.fill = 'white';
+				tmpTri.setAttribute('class', 'triangle')
+				tmpTri.setAttribute("stroke", "grey")
+				tmpTri.setAttribute('x', xCoord)
+				tmpTri.setAttribute('y', yCoord)
+				tmpTri.setAttribute("onclick", "if(this.style.fill == 'black'){this.style.fill = 'white'} else{this.style.fill = 'black'}")
+				x++;
+				game.appendChild(tmpTri);
+			}
+			y++;
 		}
-		y++;
-	    }
+		valInBox = (gameW / 12.5) - 3;
+		if (document.getElementById('0, 0').href.baseVal == document.getElementById('0, 1').href.baseVal) {
+			window.stepCount = 0;
+			document.getElementById('stepcount').innerText = window.stepCount;
+			init(parseInt(valInBox + parseInt(document.getElementById('size2').value) - 26) * 12.5, (valInBox + parseInt(document.getElementById('size2').value) - 26) * 12.5);
+		}
+
 	}
 	mark = function(id) {
-	    document.getElementById(id).setAttribute('marked', true);
+		document.getElementById(id).setAttribute('marked', true);
 	}
 	mark2 = function(id) {
-	    document.getElementById(id).setAttribute('marked2', true);
+		document.getElementById(id).setAttribute('marked2', true);
 	}
 	setMarked = function() {
-	    Array.from(document.getElementsByClassName('triangle')).forEach(function(item) {
-		if (JSON.parse(item.getAttribute("marked"))) {
-		    item.style.fill = 'black';
-		    item.setAttribute('marked', false);
-		}
-		if (JSON.parse(item.getAttribute("marked2"))) {
-		    item.style.fill = 'white';
-		    item.setAttribute('marked2', false);
-		}
-	    });
+		Array.from(document.getElementsByClassName('triangle')).forEach(function(item) {
+			if (JSON.parse(item.getAttribute("marked"))) {
+				item.style.fill = 'black';
+				item.setAttribute('marked', false);
+			}
+			if (JSON.parse(item.getAttribute("marked2"))) {
+				item.style.fill = 'white';
+				item.setAttribute('marked2', false);
+			}
+		});
 	}
 	getValue = function(x, y) {
-	    try {
-		return (document.getElementById(`${x}, ${y}`).style.fill == 'black' ? 1 : 0)
-	    } catch (err) {
-		return 0
-	    }
+		try {
+			return (document.getElementById(`${x}, ${y}`).style.fill == 'black' ? 1 : 0)
+		} catch (err) {
+			return 0
+		}
 	}
 	isFacingDown = function(x, y) {
-	    return (document.getElementById(`${x}, ${y}`).href.baseVal == '#dw-tri' ? true : false)
+		return (document.getElementById(`${x}, ${y}`).href.baseVal == '#dw-tri' ? true : false)
 	}
 	getNeighbors = function(x, y) {
-	    totalNeighbors = 0;
-	    //two to both sides
-	    totalNeighbors += (getValue(x + 1, y) + getValue(x + 2, y) + getValue(x - 1, y) + getValue(x - 2, y))
-	    if (isFacingDown(x, y)) {
-		//5 above 3 below
-		totalNeighbors += (getValue(x, y - 1) + getValue(x - 1, y - 1) + getValue(x + 1, y - 1))
-		totalNeighbors += (getValue(x, y + 1) + getValue(x - 1, y + 1) + getValue(x - 2, y + 1) + getValue(x + 1, y + 1) + getValue(x + 2, y + 1))
-	    } else {
-		//3 above 5 below
-		totalNeighbors += (getValue(x, y + 1) + getValue(x - 1, y + 1) + getValue(x + 1, y + 1))
-		totalNeighbors += (getValue(x, y - 1) + getValue(x - 1, y - 1) + getValue(x - 2, y - 1) + getValue(x + 1, y - 1) + getValue(x + 2, y - 1))
-	    }
-	    return totalNeighbors
+		totalNeighbors = 0;
+		//two to both sides
+		totalNeighbors += (getValue(x + 1, y) + getValue(x + 2, y) + getValue(x - 1, y) + getValue(x - 2, y))
+		if (isFacingDown(x, y)) {
+			//5 above 3 below
+			totalNeighbors += (getValue(x, y - 1) + getValue(x - 1, y - 1) + getValue(x + 1, y - 1))
+			totalNeighbors += (getValue(x, y + 1) + getValue(x - 1, y + 1) + getValue(x - 2, y + 1) + getValue(x + 1, y + 1) + getValue(x + 2, y + 1))
+		} else {
+			//3 above 5 below
+			totalNeighbors += (getValue(x, y + 1) + getValue(x - 1, y + 1) + getValue(x + 1, y + 1))
+			totalNeighbors += (getValue(x, y - 1) + getValue(x - 1, y - 1) + getValue(x - 2, y - 1) + getValue(x + 1, y - 1) + getValue(x + 2, y - 1))
+		}
+		return totalNeighbors
 	}
 	game = function() {
-	    foundBlack = false;
-	    Array.from(document.getElementsByClassName('triangle')).forEach(function(item) {
-		if (item.style.fill == 'black') {
-		    foundBlack = true;
+		foundBlack = false;
+		Array.from(document.getElementsByClassName('triangle')).forEach(function(item) {
+			if (item.style.fill == 'black') {
+				foundBlack = true;
+			}
+			neighbors = getNeighbors(parseInt(item.id.split(', ')[0]), parseInt(item.id.split(', ')[1]));
+			if (neighbors == 3) {
+				mark(item.id);
+			} else if (neighbors != 2) {
+				mark2(item.id)
+			}
+		});
+		setMarked();
+		if (!foundBlack || window.lastBoard == document.getElementById('game').innerHTML) {
+			clearInterval(window.Inte);
 		}
-		neighbors = getNeighbors(parseInt(item.id.split(', ')[0]), parseInt(item.id.split(', ')[1]));
-		if (neighbors == 3) {
-		    mark(item.id);
-		} else if (neighbors != 2) {
-		    mark2(item.id)
-		}
-	    });
-	    setMarked();
-	    if (!foundBlack || window.lastBoard == document.getElementById('game').innerHTML) {
-		clearInterval(window.Inte);
-	    }
-	    window.lastBoard = document.getElementById('game').innerHTML
+		window.lastBoard = document.getElementById('game').innerHTML
 	}
   </script>
-  <a> Size of each triangle? (does not work well) </a>
-  <input type="number" id="size2" autocomplete="false" value="30"><br>
+  <a> Size of each triangle? (temporarily disabled) </a>
+  <input type="number" disabled=true id="size2" autocomplete="false" value="30"><br>
   <a> Every how many milliseconds? </a><input type="number" id="timer" value="100" autocomplete="false"><br><br>
   <button id='run' onclick="window.Inte = setInterval(function() {game(); window.stepCount = window.stepCount + 1; document.getElementById('stepcount').innerText = window.stepCount;}, parseInt(document.getElementById('timer').value))">Run!</button>
   <button id='stop' onclick="clearInterval(window.Inte); window.stepCount = 0; document.getElementById('stepcount').innerText = window.stepCount;">Stop!</button>
